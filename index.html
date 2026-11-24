@@ -1,0 +1,1523 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>최성락 - 게임 클라이언트 개발자 포트폴리오</title>
+    <meta name="description" content="게임 클라이언트 개발자 최성락의 포트폴리오 - Unreal Engine, C++ 프로젝트">
+    <meta property="og:title" content="최성락 - 게임 클라이언트 개발자 포트폴리오">
+    <meta property="og:description" content="Unreal Engine, C++ 기반 게임 클라이언트 프로젝트 모음">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://sounchoi-portfolio.github.io/nagi/">
+    <meta property="og:image" content="https://sounchoi-portfolio.github.io/nagi/images/ittakestwo-main.jpg">
+    
+    <!-- Highlight.js for Code Syntax Highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/cpp.min.js"></script>
+    
+    <style>
+        /* A4 Page Setup */
+        @page {
+            size: A4;
+            margin: 0;
+        }
+        
+        @media print {
+            body {
+                margin: 0;
+                padding: 0;
+            }
+            
+            .a4-page {
+                page-break-after: always;
+            }
+            
+            nav {
+                display: none;
+            }
+        }
+        
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #8b5cf6;
+            --accent-color: #ec4899;
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-card: #334155;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            --border-color: #475569;
+            
+            /* A4 dimensions */
+            --a4-width: 210mm;
+            --a4-height: 297mm;
+            --page-padding: 12mm;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.4;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+            overflow-x: hidden;
+        }
+        
+        /* A4 Page Container */
+        .a4-page {
+            width: var(--a4-width);
+            height: var(--a4-height);
+            margin: 0 auto;
+            background: var(--bg-secondary);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .container {
+            width: 100%;
+            height: 100%;
+            padding: var(--page-padding);
+            overflow: hidden;
+        }
+        
+        /* About Me - Perfect Vertical and Horizontal Center */
+        #about-me-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        #about-me-section .container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 var(--page-padding);
+        }
+        
+        #about-me-section .about-content-wrapper {
+            width: 100%;
+        }
+        
+
+        /* Table of Contents */
+        .toc-section {
+            margin-top: 28px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            width: 100%;
+            max-width: 320px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+        }
+        .toc-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+            text-align: center;
+        }
+        .toc-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+        .toc-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--text-primary);
+            font-size: 0.84rem;
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            background: rgba(99,102,241,0.04);
+            transition: background 0.2s, border-color 0.2s;
+            width: 100%;
+        }
+        .toc-item:hover {
+            background: rgba(99,102,241,0.12);
+            border-color: var(--primary-color);
+        }
+        .toc-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            flex-shrink: 0;
+        }
+        .toc-label {
+            font-weight: 600;
+            color: var(--text-muted);
+            font-size: 0.72rem;
+            margin-right: 2px;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            padding: 10px 0;
+        }
+        
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: var(--a4-width);
+            margin: 0 auto;
+            padding: 0 var(--page-padding);
+        }
+        
+        nav .logo {
+            font-size: 1.2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 15px;
+        }
+        
+        nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            font-size: 0.85rem;
+        }
+        
+        nav a:hover {
+            color: var(--primary-color);
+        }
+        
+        /* Typography */
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+        
+        h2 {
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 45px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            border-radius: 2px;
+        }
+        
+        h3 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+        
+        h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 6px;
+        }
+        
+        p {
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            font-size: 0.88rem;
+            line-height: 1.45;
+        }
+        
+        /* About Me Grid */
+        .about-grid {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+        
+        .profile-image-container {
+            display: none;
+        }
+        
+        .profile-image {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            border: 2px solid var(--primary-color);
+            box-shadow: 0 6px 25px rgba(99, 102, 241, 0.3);
+        }
+        
+        .profile-content {
+            text-align: center;
+            width: 100%;
+            max-width: 520px;
+        }
+        .profile-content h1 {
+            margin-bottom: 6px;
+        }
+        
+        .job-title {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+            margin-bottom: 12px;
+        }
+        
+        .intro-text {
+            background: var(--bg-card);
+            padding: 16px;
+            border-radius: 10px;
+            border-left: 3px solid var(--primary-color);
+            margin: 12px 0;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+        }
+        
+        .intro-text p {
+            margin-bottom: 0;
+            font-size: 0.88rem;
+            text-align: center;
+        }
+        
+        .contact-section {
+            margin-top: 15px;
+        }
+        
+        .contact-section h3 {
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        
+        .contact-links {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+            justify-content: center;
+        }
+        
+        .contact-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 7px 14px;
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+            font-size: 0.85rem;
+        }
+        
+        .contact-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        /* Project Cards */
+        .project-card {
+            background: var(--bg-card);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 12px;
+            border: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+        }
+        
+        /* Compact project card for multiple items on one page */
+        .project-card.compact {
+            padding: 12px;
+            margin-bottom: 10px;
+        }
+        
+        .project-card.compact h3 {
+            font-size: 1.05rem;
+            margin-bottom: 6px;
+        }
+        
+        .project-card.compact h4 {
+            font-size: 0.92rem;
+            margin-bottom: 5px;
+        }
+        
+        .project-card.compact p {
+            font-size: 0.82rem;
+            margin-bottom: 6px;
+            line-height: 1.4;
+        }
+        
+        .project-meta {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin: 10px 0;
+        }
+        
+        .meta-tag {
+            padding: 5px 10px;
+            background: var(--bg-secondary);
+            border-radius: 4px;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+        }
+        
+        .contribution-list {
+            list-style: none;
+            margin: 10px 0;
+        }
+        
+        .contribution-list li {
+            padding: 6px 0;
+            padding-left: 22px;
+            position: relative;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+        
+        .contribution-list li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+        
+        /* Code Sample */
+        .code-container {
+            background: #282c34;
+            border-radius: 7px;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid var(--border-color);
+            overflow-x: auto;
+        }
+        
+        pre {
+            color: #abb2bf;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.7rem;
+            line-height: 1.35;
+            margin: 0;
+        }
+        
+        pre code {
+            background: transparent;
+            padding: 0;
+        }
+        
+        .hljs {
+            background: transparent;
+            padding: 0;
+        }
+        
+        /* Links */
+        .project-links {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 7px 16px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(99, 102, 241, 0.3);
+            font-size: 0.8rem;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 18px rgba(99, 102, 241, 0.5);
+        }
+        
+        .btn-secondary {
+            background: var(--bg-card);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+        
+        .btn-secondary:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        /* Images */
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 7px;
+        }
+        
+        /* ===== Screen view (web) ===== */
+        @media screen {
+            body {
+                padding-top: 56px;          /* 고정 내비게이션 높이만큼 */
+            }
+            .a4-page {
+                height: auto;               /* 내용이 길어도 잘리지 않도록 */
+                min-height: var(--a4-height);
+                overflow: visible;
+                margin: 0 auto 24px;
+            }
+            .container {
+                height: auto;
+                overflow: visible;
+            }
+            #about-me-section .container {
+                min-height: calc(var(--a4-height) - 1px);
+            }
+            /* 앵커 이동 시 섹션 제목이 내비게이션에 가리지 않도록 */
+            .a4-page[id], #contact {
+                scroll-margin-top: 72px;
+            }
+        }
+
+        /* Responsive for screen view */
+        @media screen and (max-width: 768px) {
+            .a4-page {
+                width: 100%;
+                min-height: 0;
+                margin-bottom: 16px;
+            }
+            .container {
+                padding: 20px 16px;
+            }
+            #about-me-section .container {
+                min-height: calc(100vh - 56px);
+                padding: 20px 16px;
+            }
+            nav .container {
+                padding: 0 16px;
+            }
+            nav ul {
+                gap: 10px;
+            }
+            nav a {
+                font-size: 0.78rem;
+            }
+            pre {
+                font-size: 0.68rem;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            h2 {
+                font-size: 1.4rem;
+            }
+            
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVIGATION -->
+    <nav>
+        <div class="container">
+            <a href="#about-me-section" class="logo" style="text-decoration: none;">최성락</a>
+            <ul>
+                <li><a href="#about-me-section">About</a></li>
+                <li><a href="#project-1">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- PAGE 1: ABOUT ME (PERFECT CENTER) -->
+    <div class="a4-page" id="about-me-section">
+        <div class="container">
+            <div class="about-content-wrapper">
+                <div class="about-grid">
+                    <div class="profile-image-container">
+</div>
+                    
+                    <div class="profile-content">
+                        <h1>최성락</h1>
+                        <p class="job-title">게임 클라이언트 개발자</p>
+                        
+                        <div class="intro-text">
+                            <p>문제를 끝까지 파고들며 성장하는 게임 클라이언트 개발자 최성락입니다.</p>
+                        </div>
+                        
+                        <div class="contact-section" id="contact">
+                            <h3>Contact & Links</h3>
+                            <div class="contact-links">
+<a href="https://github.com/flatroad" class="contact-link" target="_blank">
+                                    💻 GitHub
+                                </a>
+                                <a href="https://sounchoi-portfolio.github.io/nagi/" class="contact-link" target="_blank">
+                                    🌐 Portfolio
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                    <div class="toc-section">
+                        <p class="toc-title">Contents</p>
+                        <div class="toc-grid">
+                            <a href="#project-1" class="toc-item">
+                                <span class="toc-dot"></span>
+                                <span><span class="toc-label">01</span> It Takes Two (모작)</span>
+                            </a>
+                            <a href="#project-2" class="toc-item">
+                                <span class="toc-dot"></span>
+                                <span><span class="toc-label">02</span> DualSense D-pad 입력 처리</span>
+                            </a>
+                            <a href="#project-3" class="toc-item">
+                                <span class="toc-dot"></span>
+                                <span><span class="toc-label">03</span> TumbleTumble</span>
+                            </a>
+                            <a href="#project-4" class="toc-item">
+                                <span class="toc-dot"></span>
+                                <span><span class="toc-label">04</span> Console Engine</span>
+                            </a>
+                            <a href="#project-5" class="toc-item">
+                                <span class="toc-dot"></span>
+                                <span><span class="toc-label">05</span> Cub3D</span>
+                            </a>
+                            <a href="#education" class="toc-item">
+                                <span class="toc-dot"></span>
+                                <span><span class="toc-label">06</span> Education & Activities</span>
+                            </a>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE 2: PROJECT 1 - It Takes Two Overview -->
+    <div class="a4-page" id="project-1">
+        <div class="container">
+            <h2>It Takes Two (모작)</h2>
+            
+            <div class="project-card">
+                <h3>프로젝트 개요</h3>
+                <img src="./images/ittakestwo-main.jpg" alt="It Takes Two 게임 스크린샷" style="width: 100%; margin: 10px 0;">
+                <p>It Takes Two의 오두막 챕터 공구통 보스전 구간을 재현했습니다. 협동 플레이의 조작감과 화면 UX를 Unreal C++로 구현했습니다.</p>
+                <div class="project-meta">
+                    <span class="meta-tag">장르: 협동 액션 어드벤처</span>
+                    <span class="meta-tag">역할: 캐릭터/카메라 시스템 개발</span>
+                    <span class="meta-tag">기간: 2024.07.22 - 2024.08.16</span>
+                    <span class="meta-tag">기술: Unreal Engine 5, C++</span>
+                </div>
+                <p><strong>팀 구성:</strong> 5명 (언리얼 개발자 3명, 기획자 1명, TA 1명)</p>
+                
+                <div style="margin-top: 12px;">
+                    <h4>프로젝트 링크</h4>
+                    <div class="project-links">
+                        <a href="https://github.com/ItTakesTwo-Metaverse/ItTakesTwo" class="btn" target="_blank">GitHub Repository</a>
+                        <a href="https://youtu.be/UKX-qx788uw" class="btn btn-secondary" target="_blank">Demo Video</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="project-card">
+                <h3>본인 기여 내용</h3>
+                <ul class="contribution-list">
+                    <li><strong>카메라/캐릭터 이동/애니메이션 구현:</strong> 캐릭터 이동 상태에 따라 카메라 규칙과 정면 기준을 분리해 조작감 향상</li>
+                    <li><strong>캐릭터 애니메이션 적용:</strong> Animation Retargeting을 활용한 애니메이션 시스템 구축</li>
+                    <li><strong>8방향 이동 제한:</strong> 아날로그 스틱 입력을 8방향으로 양자화해 원작의 이동 감각 재현</li>
+                    <li><strong>화면 동적 분할:</strong> 캐릭터 사망 등 게임 상황에 따라 스플릿 스크린이 동적으로 변화하도록 구현</li>
+                    <li><strong>상태 기반 행동 제어:</strong> 상태 컴포넌트로 캐릭터 행동을 제한하고 강제하는 시스템 설계</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE 3: PROJECT 1 - Technical Challenges (Both sections combined) -->
+    <div class="a4-page">
+        <div class="container">
+            <h2>It Takes Two - 기술적 도전과 해결</h2>
+            
+            <div class="project-card compact">
+                <h3>비트마스크 기반 상태 관리 시스템</h3>
+                
+                <h4 style="color: var(--primary-color); font-size: 0.9rem; margin-bottom: 4px;">Problem</h4>
+                <p style="margin-bottom: 6px;">걷기 중 점프와 제자리 점프에서 앞으로 가는 힘의 크기가 다르고, 같은 방향키를 눌러도 현재 상태에 따라 캐릭터의 반응이 달라집니다. 초기에는 조건문으로 구현하려 했으나, 상태 조합이 늘어날수록 코드 복잡도가 급격히 증가했습니다.</p>
+                
+                <h4 style="color: var(--primary-color); font-size: 0.9rem; margin-bottom: 4px;">Analysis</h4>
+                <p style="margin-bottom: 6px;">모든 상태 전이를 if-else로 처리하면 케이스마다 예외 처리가 필요했고, 새로운 상태 추가 시 기존 코드를 모두 검토해야 하는 문제가 있었습니다. 알고리즘 문제에서 비트마스킹으로 상태 조합을 다룬 경험을 떠올려, 상태를 플래그로 관리하면 중첩 케이스를 체계적으로 정리할 수 있다고 판단했습니다.</p>
+                
+                <h4 style="color: var(--primary-color); font-size: 0.9rem; margin-bottom: 4px;">Solution</h4>
+                <p style="margin-bottom: 6px;">캐릭터 상태 관리 컴포넌트를 구현하고, 각 상태를 비트 플래그로 정의했습니다. OR 연산으로 상태를 중첩시키고, AND 연산으로 특정 상태 조합을 검사하는 방식으로 전이 규칙을 단순화했습니다.</p>
+                
+                <h4 style="color: var(--primary-color); font-size: 0.9rem; margin-bottom: 4px;">Result</h4>
+                <p>상태 중첩을 자료구조 수준에서 처리해 분기문을 대폭 줄였고, 모든 상태 전이 규칙을 한 곳에서 관리할 수 있게 되었습니다.</p>
+            </div>
+            
+            <div class="project-card compact">
+                <h3>내적 기반 8방향 입력 양자화</h3>
+                
+                <h4 style="color: var(--primary-color); font-size: 0.9rem; margin-bottom: 4px;">Problem</h4>
+                <p style="margin-bottom: 6px;">패드 스틱은 360도 연속 입력이 가능하지만, 원작은 8방향으로만 이동합니다. 단순히 각도를 45도씩 나누는 방식은 경계값 처리가 불안정했습니다.</p>
+                
+                <h4 style="color: var(--primary-color); font-size: 0.9rem; margin-bottom: 4px;">Analysis</h4>
+                <p style="margin-bottom: 6px;">입력 벡터를 가장 가까운 8개 방향축 중 하나로 투영하는 방식이 필요했습니다. 이전에 탱크 시뮬레이션에서 AI가 플레이어 방향을 판단할 때 내적을 활용한 경험이 있었고, 이를 응용하면 8방향 중 최적 방향을 수학적으로 명확히 결정할 수 있다고 생각했습니다.</p>
+                
+                <h4 style="color: var(--primary-color); font-size: 0.9rem; margin-bottom: 4px;">Solution</h4>
+                <p style="margin-bottom: 6px;">8개의 단위 방향 벡터를 미리 정의하고, 입력 벡터와 각각 내적 연산을 수행했습니다. 내적값이 가장 큰 방향을 최종 이동 방향으로 선택하는 방식으로 구현했습니다.</p>
+                
+                <h4 style="color: var(--primary-color); font-size: 0.9rem; margin-bottom: 4px;">Result</h4>
+                <p>입력이 항상 8개 방향 중 하나로 안정적으로 정리되어, 원작과 유사한 명확한 이동 감각을 구현할 수 있었습니다.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE 4: PROJECT 1 - Code Samples -->
+    <div class="a4-page">
+        <div class="container">
+            <h2>It Takes Two - 코드 샘플</h2>
+            
+            <div class="project-card">
+                <h4>비트마스크 상태 추가 및 검증</h4>
+                <div class="code-container">
+                    <pre><code class="language-cpp">bool UCSR_P_AComp_CharicStateMannage::AddState(int32 NewState)
+{
+    if (this->TotalControlState(NewState))
+    {
+        this->CurrentState = this->CurrentState | NewState;
+        UE_LOG(LogTemp, Warning, TEXT("%d %d"), this->CurrentState, NewState);
+        this->SpendStateToAnim();
+        return (true);
+    }
+    return (false);
+}
+
+bool UCSR_P_AComp_CharicStateMannage::CanAddJumpMove()
+{
+    if (this->CurrentState & (DIE | REBORN | PRESS | ATTACK | AIRSIT | MOVE))
+        return false;
+    if (this->CurrentState & JUMP)
+        return true;
+    return false;
+}</code></pre>
+                </div>
+                <p style="margin-top: 8px; color: var(--text-secondary); font-size: 0.8rem;">AddState()에서 상태를 OR로 중첩시키고, 진입 가능 여부는 TotalControlState()로 판단합니다.</p>
+            </div>
+            
+            <div class="project-card">
+                <h4>8방향 내적 계산</h4>
+                <div class="code-container">
+                    <pre><code class="language-cpp">int32 UCSR_P_AComp_CharicMovement::ChooseDirectionFlag(FVector2D& PadDirection_)
+{
+    UCSR_Direction_GameInstance* GameInstance = Cast<UCSR_Direction_GameInstance>(
+        UGameplayStatics::GetGameInstance(this->GetWorld())
+    );
+    const TArray<FVector2D>& Directions = GameInstance->Directions;
+    
+    float RelativeDValue = -1;
+    int32 flag = 0, answer = 0;
+    
+    for (FVector2D param : Directions)
+    {
+        flag = flag + 1;
+        float CalcDot = FVector2D::DotProduct(PadDirection_, param);
+        if (CalcDot > RelativeDValue)
+        {
+            answer = flag;
+            RelativeDValue = CalcDot;
+        }
+    }
+    return (answer);
+}</code></pre>
+                </div>
+                <p style="margin-top: 8px; color: var(--text-secondary); font-size: 0.8rem;">8방향 축과 입력 벡터의 내적을 계산해, 가장 큰 내적 값을 갖는 방향을 선택합니다.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE 5: PROJECT 1 - Learnings -->
+    <div class="a4-page">
+        <div class="container">
+            <h2>It Takes Two - 배운 점 및 개선 사항</h2>
+            
+            <div class="project-card">
+                <h3>기술적으로 배운 것</h3>
+                <ul class="contribution-list">
+                    <li>게임의 조작감은 입력 처리, 카메라 로직, 캐릭터 이동, 애니메이션이 유기적으로 연결된 결과입니다. 각 요소의 규칙을 명확히 분리하면 디버깅과 조정이 훨씬 수월해진다는 것을 배웠습니다.</li>
+                    <li>상태가 중첩되는 복잡한 시스템에서는 비트마스크로 상태를 표현하면 전이 조건을 명확하게 정의할 수 있고, 새로운 기능 추가 시 확장성도 확보됩니다.</li>
+                    <li>Unreal Engine의 Animation Retargeting, Layered Blend 같은 기능을 활용하면 애니메이션 제작 리스크를 크게 줄일 수 있습니다.</li>
+                </ul>
+            </div>
+            
+            <div class="project-card">
+                <h3>개선할 수 있는 부분</h3>
+                <ul class="contribution-list">
+                    <li><strong>네트워크 동기화 지원:</strong> 현재는 로컬 협동 플레이만 지원하지만, Unreal의 Replication 시스템을 활용해 온라인 멀티플레이를 구현하면 원격 협동 플레이가 가능해집니다.</li>
+                    <li><strong>데이터 기반 상태 정의:</strong> 현재 상태가 코드에 하드코딩되어 있어서 상태 추가나 수정 시 컴파일이 필요합니다. JSON이나 DataTable로 상태 정의를 외부화하면 기획자가 직접 상태 규칙을 수정하고 테스트할 수 있어 반복 작업 속도가 빨라집니다.</li>
+                    <li><strong>PlayStation 컨트롤러 지원:</strong> 현재 Xbox 컨트롤러는 Unreal에서 기본 지원되어 정상 작동하지만, PlayStation 컨트롤러는 입력이 제대로 인식되지 않는 문제가 있습니다.</li>
+                </ul>
+            </div>
+            
+            <div class="project-card">
+                <h3>추가 학습 자료</h3>
+                <p style="margin-bottom: 10px;">프로젝트 진행 중 학습한 내용을 정리한 기술 블로그 포스트입니다.</p>
+                <div class="project-links">
+                    <a href="https://velog.io/@flatroad/It-Takes-Two-%ED%99%94%EB%A9%B4-%EB%B6%84%ED%95%A0" class="btn btn-secondary" target="_blank">📝 화면 분할 상세 설명</a>
+                    <a href="https://velog.io/@flatroad/It-Takes-Two-%EC%B9%B4%EB%A9%94%EB%9D%BC-%EC%9D%B4%EB%8F%99" class="btn btn-secondary" target="_blank">📝 카메라 이동 상세 설명</a>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- PAGE 10: PROJECT 2 - DualSense Overview -->
+    <div class="a4-page" id="project-2">
+        <div class="container">
+            <h2>Unreal RawInput 분석 및 DualSense D-pad 입력 처리</h2>
+            
+            <div class="project-card">
+                <h3>프로젝트 개요</h3>
+                <img src="./images/dualsense-main.jpg" alt="DualSense 프로젝트 메인 이미지" style="width: 100%; margin: 10px 0;">
+                <p>Windows 환경에서 Unreal Engine이 유선 PlayStation 컨트롤러 DualSense의 입력을 받을 수 있도록 RawInput 플러그인을 분석하고, 누락된 D-pad 입력 처리를 직접 구현했습니다.</p>
+                <div class="project-meta">
+                    <span class="meta-tag">분야: 입력 시스템 개선</span>
+                    <span class="meta-tag">역할: RawInput 분석 및 입력 시스템 개선</span>
+                    <span class="meta-tag">기간: 2025.03.21 - 2025.03.27</span>
+                    <span class="meta-tag">기술: Unreal Engine 5, C++, Windows RawInput/HID</span>
+                </div>
+                <p><strong>팀 구성:</strong> 1명 (개인 프로젝트)</p>
+                
+                <div style="margin-top: 12px;">
+                    <h4>프로젝트 링크</h4>
+                    <div class="project-links">
+                        <a href="https://github.com/Potenup/PS-Controller" class="btn" target="_blank">GitHub Repository</a>
+                        <a href="https://youtu.be/fVFXsGatZ6w" class="btn btn-secondary" target="_blank">Demo Video</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="project-card">
+                <h3>본인 기여 내용</h3>
+                <ul class="contribution-list">
+                    <li><strong>HID Report 구조 분석 및 D-pad 입력 위치 특정:</strong> Wireshark를 활용해 HID Report를 분석하고, 9번째 바이트에서 D-pad 값이 변화하는 것을 확인</li>
+                    <li><strong>RawInput 플러그인 입력 처리 로직 구현:</strong> D-pad 바이트 데이터를 4방향 버튼 상태로 변환하는 시스템 구현</li>
+                    <li><strong>DualSense 장치 인식 및 통합:</strong> Unreal RawInput 설정에 DualSense 장치를 등록하고 입력 검증</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE 11: PROJECT 3 - Technical Challenge (Problem & Analysis) -->
+    <div class="a4-page">
+        <div class="container">
+            <h2>DualSense - 기술적 도전과 해결</h2>
+            
+            <div class="project-card">
+                <h4>문제 상황 (Problem)</h4>
+                <p>Windows는 PlayStation 전용 API를 제공하지 않아 DirectInput이나 RawInput으로 입력을 처리해야 하는데, Unreal Engine은 기본적으로 PlayStation 컨트롤러를 즉시 사용하기 어려웠습니다. RawInput 플러그인이 HID Report 매핑을 지원하긴 하지만, PlayStation 컨트롤러는 Unreal이 기대하는 표준 매핑과 달라서 D-pad 입력이 처리되지 않았습니다. DS4Windows나 Steam 같은 외부 프로그램으로 우회할 수 있지만, 외부 도구 없이 Unreal 내부에서 해결하고자 했습니다.</p>
+            </div>
+            
+            <div class="project-card">
+                <h4>원인 분석 (Analysis)</h4>
+                <p>Wireshark로 원시 HID Report 데이터를 캡처해 분석한 결과, D-pad 입력 시 9번째 바이트의 값이 변화하는 것을 확인했습니다.</p>
+                <img src="./images/dualsense-wireshark.png" alt="Wireshark HID Report 분석 화면" style="width: 100%; margin: 12px 0;">
+                <p>RawInput 플러그인 코드를 확인해보니 9번째 바이트에 대한 D-pad 해석 로직이 없었습니다. 이 바이트 값을 어떻게 버튼 상태로 변환할지 직접 구현이 필요했습니다.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE 12: PROJECT 3 - Technical Challenge (Solution & Result) -->
+    <div class="a4-page">
+        <div class="container">
+            <h2>DualSense - 기술적 도전과 해결</h2>
+            
+            <div class="project-card">
+                <h4>해결 방법 (Solution)</h4>
+                <p>RawInput 설정에 DualSense 장치 정보를 등록해 HID Report를 받을 수 있도록 했습니다.</p>
+                <img src="./images/dualsense-rawinput.png" alt="Unreal RawInput Edit 화면" style="width: 100%; margin: 12px 0;">
+                <p>RawInputWindows.cpp에서 ReportPtr[8], 즉 9번째 바이트의 값을 읽고, 8방향과 중립을 포함한 D-pad 입력을 Up, Down, Left, Right 4개 버튼 상태로 변환해 ButtonData 배열에 매핑했습니다.</p>
+            </div>
+            
+            <div class="project-card">
+                <h4>결과 및 성과 (Result)</h4>
+                <p>유선 연결 기준으로 DualSense D-pad 입력이 Unreal 내부 입력 시스템으로 정상 전달되도록 개선했습니다. 왜 작동하지 않는지 추측으로 끝내지 않고, 원시 HID Report부터 플러그인 내부까지 추적해서 누락된 부분을 찾아냈고, 이를 직접 구현해서 해결했습니다.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE 13: PROJECT 3 - Code Samples & Learnings -->
+    <div class="a4-page">
+        <div class="container">
+            <h2>DualSense - 코드 샘플 및 배운 점</h2>
+            
+            <div class="project-card">
+                <h4>D-pad 입력 HID Report 매핑 및 버튼 상태 변환</h4>
+                <div class="code-container">
+                    <pre><code class="language-cpp">if (ReportPtr[0] == 0x01 && InRawInputDataBuffer->data.hid.dwSizeHid > 8)
+{
+    uint8 dpadValue = ReportPtr[8] & 0x0F;
+    
+    bool isDpadUp = (dpadValue == 0 || dpadValue == 1 || dpadValue == 7);
+    bool isDpadRight = (dpadValue == 1 || dpadValue == 2 || dpadValue == 3);
+    bool isDpadDown = (dpadValue == 3 || dpadValue == 4 || dpadValue == 5);
+    bool isDpadLeft = (dpadValue == 5 || dpadValue == 6 || dpadValue == 7);
+    
+    const int32 DpadUpIndex = 11;
+    if (DpadUpIndex < DeviceEntry->ButtonData.Num())
+        DeviceEntry->ButtonData[DpadUpIndex].bButtonState = isDpadUp;
+    ...
+    DeviceEntry->bNeedsUpdate = true;
+}</code></pre>
+                </div>
+                <p style="margin-top: 8px; color: var(--text-secondary); font-size: 0.8rem;">Wireshark로 확인한 D-pad 값의 위치인 9번째 바이트를 읽어 4방향 버튼 상태로 변환합니다.</p>
+            </div>
+            
+            <div class="project-card">
+                <h3>기술적으로 배운 것</h3>
+                <ul class="contribution-list">
+                    <li>입력이 작동하지 않을 때 단순히 기능만 체크하고 끝내는 것이 아니라, 원시 HID Report 데이터부터 엔진 플러그인 매핑, 최종 게임 입력까지 단계별로 추적하며 원인을 좁혀가는 디버깅 과정을 경험했습니다.</li>
+                    <li>Unreal의 게임플레이 레벨뿐만 아니라 플러그인과 OS 입력 계층까지 내려가 원인을 추적하면, 엔진 하위 계층의 문제도 직접 해결할 수 있다는 것을 확인했습니다. 이런 접근이 실제 개발에서도 유용하다는 것을 느꼈습니다.</li>
+                </ul>
+            </div>
+            
+            <div class="project-card">
+                <h3>개선할 수 있는 부분</h3>
+                <ul class="contribution-list">
+                    <li><strong>무선 블루투스 컨트롤러 지원:</strong> 유선과 무선의 HID Report 구조가 달라 별도 매핑이 필요합니다. 더 안정적인 식별 방법과 블루투스 전용 바이트 매핑을 추가해야 합니다.</li>
+                    <li><strong>다중 컨트롤러 입력 처리:</strong> 컨트롤러를 2개 이상 연결하면 입력이 올바르게 분배되지 않는 문제가 있습니다.</li>
+                    <li><strong>핫플러그 안정성 개선:</strong> 게임 실행 중 컨트롤러를 연결하거나 해제할 때 즉시 인식되지 않는 문제가 있습니다.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- PAGE 6: PROJECT 3 - TumbleTumble Overview -->
+    <div class="a4-page" id="project-3">
+        <div class="container">
+            <h2>TumbleTumble</h2>
+            
+            <div class="project-card">
+                <h3>프로젝트 개요</h3>
+                <img src="./images/tubble-main.jpg" alt="TumbleTumble 게임 스크린샷" style="width: 100%; margin: 10px 0;">
+                <p>Human Fall Flat처럼 협동해서 진행하는 간단한 멀티플레이 프로토타입입니다.<br>
+                게임플레이 서버와 별개로 채팅 전용 서버를 분리해 모듈화했습니다.</p>
+                <div class="project-meta">
+                    <span class="meta-tag">장르: 협동 멀티플레이 액션</span>
+                    <span class="meta-tag">역할: 네트워크 프로그래밍</span>
+                    <span class="meta-tag">기간: 2025.06.05 - 2025.06.20</span>
+                    <span class="meta-tag">기술: Unreal Engine 5, C++</span>
+                </div>
+                <p><strong>팀 구성:</strong> 2명 (언리얼 개발자 2명)</p>
+                
+                <div style="margin-top: 12px;">
+                    <h4>프로젝트 링크</h4>
+                    <div class="project-links">
+                        <a href="https://github.com/ForNaggi/UnrealChatServer" class="btn" target="_blank">GitHub Repository</a>
+                        <a href="https://www.youtube.com/watch?v=hI5eYPj5So4" class="btn btn-secondary" target="_blank">Demo Video</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="project-card">
+                <h3>본인 기여 내용</h3>
+                <ul class="contribution-list">
+                    <li>경량 멀티 채팅 서버 구현 (Winsock2 기반)</li>
+                    <li>Unreal Chat UI 구현</li>
+                    <li>UI와 서버 연동</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE 7: PROJECT 2 - Technical Challenge -->
+    <div class="a4-page">
+        <div class="container">
+            <h2>TumbleTumble - 기술적 도전과 해결</h2>
+            
+            <div class="project-card">
+                <h4>문제 상황 (Problem)</h4>
+                <p>Unreal Engine의 RPC 시스템을 통해 채팅 기능을 구현할 경우, 게임플레이 로직과 동일한 서버에서 채팅이 처리되기 때문에 게임 서버 부하 증가 및 확장성에 제한이 발생합니다.</p>
+            </div>
+            
+            <div class="project-card">
+                <h4>원인 분석 (Analysis)</h4>
+                <p>추후 고려 가능한 기능인 1대 1 채팅, 대화 로그 저장 등을 고려하면 Unreal Server가 너무 많은 역할을 담당하게 되어 유지보수에서 불리합니다.</p>
+            </div>
+            
+            <div class="project-card">
+                <h4>해결 방법 (Solution)</h4>
+                <p>채팅 전용 서버를 구성하고, 게임 로직과는 별도로 통신하도록 구조를 분리했습니다. Windows에서는 Winsock2를 학습하여 적용하고, select()를 이용한 멀티플렉싱 방식으로 다중 클라이언트를 구현했습니다.</p>
+                <img src="./images/tubble-select-diagram.jpg" alt="Select 기반 멀티플렉싱 다이어그램" style="width: 55%; margin: 12px auto; display: block;">
+            </div>
+            
+            <div class="project-card">
+                <h4>결과 및 성과 (Result)</h4>
+                <p>게임 서버와 채팅 서버를 분리해 각 서버의 역할을 명확히 했습니다. 채팅 서버는 Winsock2로 직접 구현하고, Unreal 클라이언트는 플랫폼별 구현이 내부적으로 추상화된 FSocket으로 연결해 플랫폼에 관계없이 동일한 클라이언트 네트워크 코드를 유지할 수 있었습니다.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE 8: PROJECT 2 - Code Samples -->
+    <div class="a4-page">
+        <div class="container">
+            <h2>TumbleTumble - 코드 샘플</h2>
+            
+            <div class="project-card">
+                <h4>fd_set 구성 + 서버/클라 소켓 등록</h4>
+                <div class="code-container">
+                    <pre><code class="language-cpp">while (this->_isRunning)
+{
+    this->_selectManager.setupFdSet();
+    this->_selectManager.addSocket(this->_tcpSocket.getSocket());
+    SOCKET client_sockets[ClientManager::MAX_CLIENTS];
+    int socket_count = _clientManager.getAllSockets(client_sockets, 
+                                                     ClientManager::MAX_CLIENTS);
+    for (int i = 0; i < socket_count; ++i)
+        this->_selectManager.addSocket(client_sockets[i]);
+    ...</code></pre>
+                </div>
+                <p style="margin-top: 8px; color: var(--text-secondary); font-size: 0.82rem;">매 루프마다 fd_set을 초기화하고, 서버 소켓 + 모든 클라 소켓을 한 곳에 등록합니다.<br>
+                ClientManager로 소켓 수집을 분리해 모듈화했습니다.</p>
+            </div>
+            
+            <div class="project-card">
+                <h4>select 실행 + 결과 처리(타임아웃/에러 분기)</h4>
+                <div class="code-container">
+                    <pre><code class="language-cpp">    SelectManager::Result select_result = this->_selectManager.executeSelect(1);
+    ...
+    // TIMEOUT이면 continue, 에러면 루프 종료/리턴, SUCCESS면 아래 ready 처리로 진행
+    ...</code></pre>
+                </div>
+                <p style="margin-top: 8px; color: var(--text-secondary); font-size: 0.82rem;">select()는 준비된 소켓이 있을 때만 다음 처리로 넘어갑니다.<br>
+                TIMEOUT/FAIL/SUCCESS로 상태 관리를 명확히 두었습니다.</p>
+            </div>
+            
+            <div class="project-card">
+                <h4>ready된 소켓만 처리(accept + recv/disconnect)</h4>
+                <div class="code-container">
+                    <pre><code class="language-cpp">    if (this->_selectManager.isSocketReady(this->_tcpSocket.getSocket()))
+        this->handleNewConnection();
+    for (int i = 0; i < ClientManager::MAX_CLIENTS; ++i)
+    {
+        SOCKET client_socket = this->_clientManager.getClientSocket(i);
+        if (client_socket != INVALID_SOCKET && 
+            this->_selectManager.isSocketReady(client_socket))
+            if (this->handleClientMessage(i) == false)
+            { 
+                this->announceLeave(i); 
+                this->_clientManager.removeClient(i); 
+            }
+    }
+}</code></pre>
+                </div>
+                <p style="margin-top: 8px; color: var(--text-secondary); font-size: 0.82rem;">서버 소켓이 ready면 accept, 클라 소켓이 ready면 recv 처리합니다.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE 9: PROJECT 2 - Learnings -->
+    <div class="a4-page">
+        <div class="container">
+            <h2>TumbleTumble - 배운 점 및 개선 사항</h2>
+            
+            <div class="project-card">
+                <h3>기술적으로 배운 것</h3>
+                <ul class="contribution-list">
+                    <li><strong>Windows 소켓 프로그래밍:</strong> Unix의 &lt;sys/socket.h&gt;와 Windows의 Winsock2의 차이점을 학습하고, Winsock2가 BSD 소켓과 유사하게 작동하도록 설계된 점이 흥미로웠습니다.</li>
+                    <li><strong>OS 간 시스템 설계 철학 차이:</strong> Unix는 모든 것을 파일로 보고 디스크립터로 접근하는 반면, Windows는 Handle과 Socket이라는 별도의 접근 방식을 사용하는 차이를 이해했습니다.</li>
+                    <li><strong>Unreal Engine 내부 구조:</strong> SocketSubsystem이 다양한 플랫폼에 대해 동일하게 작동할 수 있도록 추상화되어 있으며, 내부적으로는 플랫폼별 네이티브 API를 사용하는 구조를 확인했습니다.</li>
+                </ul>
+            </div>
+            
+            <div class="project-card">
+                <h3>개선할 수 있는 부분</h3>
+                <ul class="contribution-list">
+                    <li><strong>프로토콜 명확화:</strong> 현재 Chat Server의 프로토콜을 명확히 정하지 않았기 때문에, 추후 확장성을 고려하면 표준 프로토콜 정의가 필요합니다.</li>
+                    <li><strong>서비스 배포:</strong> 현재 Chat Server와 Dedicated Server는 로컬 환경에서만 작동하므로, AWS 등 클라우드 환경에서 서비스화하는 작업이 필요합니다.</li>
+                    <li><strong>대규모 동시 접속 대응:</strong> 현재는 소규모 유저를 타겟으로 select() 방식을 사용했지만, 많은 클라이언트를 고려하면 IOCP나 멀티 프로세스 방식을 검토해야 합니다.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+<!-- PAGE 14: PROJECT 4 - Console Engine Overview -->
+    <div class="a4-page" id="project-4">
+        <div class="container">
+            <h2>게임 엔진 아키텍처 학습: Input-Update-Render 루프 구현</h2>
+            
+            <div class="project-card">
+                <h3>프로젝트 개요</h3>
+                <img src="./images/console-engine-main.png" alt="Console Engine 프로젝트 메인 이미지" style="width: 50%; margin: 10px 0;">
+                <p>상용 게임 엔진(Unreal)의 핵심 아키텍처를 이해하기 위해 Windows 콘솔 환경에서 Input → Update → Render → Present 루프를 직접 구현했습니다. Level-Actor 구조와 생명주기 관리를 통해 엔진의 기본 설계 원리를 학습했으며, A* 경로 탐색 시뮬레이터를 제작해 실용성을 검증했습니다.</p>
+                <div class="project-meta">
+                    <span class="meta-tag">분야: 게임 엔진 아키텍처</span>
+                    <span class="meta-tag">역할: 엔진 및 시뮬레이터 전체 구현</span>
+                    <span class="meta-tag">기간: 2025.02.01 - 2025.02.27</span>
+                    <span class="meta-tag">기술: C++, Windows API</span>
+                </div>
+                <p><strong>팀 구성:</strong> 1명 (개인 프로젝트)</p>
+                
+                <div style="margin-top: 12px;">
+                    <h4>프로젝트 링크</h4>
+                    <div class="project-links">
+                        <a href="https://github.com/Potenup/Potenup_SecondProject_AStarAlgorithmSymul" class="btn" target="_blank">GitHub</a>
+                        <a href="https://youtu.be/EGKwK7O3WLw" class="btn btn-secondary" target="_blank">Demo Video</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="project-card">
+                <h3>본인 기여 내용</h3>
+                <ul class="contribution-list">
+                    <li><strong>엔진 루프 구성:</strong> Unreal Engine의 Tick 시스템과 유사하게 프레임마다 입력 → 업데이트 → 렌더링 → 화면 출력 순서 구현</li>
+                    <li><strong>Level-Actor 구조 설계:</strong> Unreal의 World-Actor 관계를 참고하여 Level이 Actor를 관리하고 Update/Draw를 호출하는 구조 구현</li>
+                    <li><strong>Actor 생명주기 관리:</strong> Unreal의 지연 삭제 방식을 참고해 적용하여 순회 중 Actor 추가/삭제로 인한 크래시 방지</li>
+                    <li><strong>ScreenBuffer 렌더 시스템:</strong> 화면을 버퍼에 먼저 구성한 뒤 한 번에 출력하는 방식으로 깜빡임 없는 렌더링 구현</li>
+                    <li><strong>Dirty Render 최적화:</strong> 변경된 셀만 다시 그려 불필요한 렌더링 제거</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE 15: PROJECT 4 - Technical Challenges -->
+    <div class="a4-page">
+        <div class="container">
+            <h2>Console Engine - 기술적 도전과 해결</h2>
+            
+            <div class="project-card compact">
+                <h3>콘솔 출력 깜빡임과 프레임 제어</h3>
+                
+                <h4 style="color: var(--primary-color); font-size: 0.9rem; margin-bottom: 4px;">Problem</h4>
+                <p style="margin-bottom: 6px;">커서 기반 출력은 출력 순서가 불안정하고, 프레임 단위로 렌더링 흐름을 제어하기 어려웠습니다. 화면이 깜빡이고 잔상이 남는 문제가 발생했습니다.</p>
+                
+                <h4 style="color: var(--primary-color); font-size: 0.9rem; margin-bottom: 4px;">Solution</h4>
+                <p style="margin-bottom: 6px;">ScreenBuffer를 만들어서 화면을 버퍼에 먼저 그린 뒤 한 번에 출력하는 방식으로 바꿨습니다. 이렇게 하니 그리는 작업과 출력하는 작업을 확실히 나눌 수 있었습니다.</p>
+                
+                <h4 style="color: var(--primary-color); font-size: 0.9rem; margin-bottom: 4px;">Result</h4>
+                <p>화면 갱신이 안정화되었고, 엔진 루프에서 Render와 Present 단계가 명확히 구분되어 Unreal Engine의 렌더링 파이프라인 개념을 이해하는 데 도움이 되었습니다.</p>
+            </div>
+            
+            <div class="project-card compact">
+                <h3>Actor 생명주기 관리와 순회 안정성</h3>
+                
+                <h4 style="color: var(--primary-color); font-size: 0.9rem; margin-bottom: 4px;">Problem</h4>
+                <p style="margin-bottom: 6px;">Update/Draw 순회 중 Actor가 추가되거나 삭제되면 컨테이너 참조가 깨지고 크래시가 발생했습니다.</p>
+                
+                <h4 style="color: var(--primary-color); font-size: 0.9rem; margin-bottom: 4px;">Solution</h4>
+                <p style="margin-bottom: 6px;">Unreal의 지연 삭제 방식을 참고하여, Destroy() 호출 시 즉시 삭제하지 않고 만료 표시만 남기고, 실제 정리는 프레임 끝 한 지점에서만 처리하도록 규칙을 고정했습니다.</p>
+                
+                <h4 style="color: var(--primary-color); font-size: 0.9rem; margin-bottom: 4px;">Result</h4>
+                <p>Update/Draw 순회가 안정화되었고, 추가 기능이 늘어나도 정리 타이밍이 흔들리지 않습니다.</p>
+            </div>
+            
+            <div class="project-card compact">
+                <h3>렌더링 비용 최적화</h3>
+                
+                <h4 style="color: var(--primary-color); font-size: 0.9rem; margin-bottom: 4px;">Problem</h4>
+                <p style="margin-bottom: 6px;">보드 전체를 매 프레임 다시 그리는 방식은 보드 크기가 커질수록 비효율적이었습니다.</p>
+                
+                <h4 style="color: var(--primary-color); font-size: 0.9rem; margin-bottom: 4px;">Solution</h4>
+                <p style="margin-bottom: 6px;">변경된 셀만 Dirty로 표시하고, Dirty 셀만 다시 그리도록 변경했습니다.</p>
+                
+                <h4 style="color: var(--primary-color); font-size: 0.9rem; margin-bottom: 4px;">Result</h4>
+                <p>매 프레임 전체 갱신에서 변경 영역만 갱신하는 방식으로 전환하여 렌더링 비용을 크게 절감했습니다.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE 16: PROJECT 4 - Code Samples & Learnings -->
+    <div class="a4-page">
+        <div class="container">
+            <h2>Console Engine - 코드 샘플 및 배운 점</h2>
+            
+            <div class="project-card">
+                <h4>엔진 루프와 프레임 끝 정리</h4>
+                <div class="code-container">
+                    <pre><code class="language-cpp">while (true)
+{
+    if (quit) break;
+    QueryPerformanceCounter(&time);
+    currentTime = time.QuadPart;
+    float deltaTime = float(currentTime - previousTime) / float(frequency.QuadPart);
+    if (deltaTime >= targetOneFrameTime)
+    {
+        ProcessInput();
+        Update(deltaTime);
+        Draw();
+        SavePreviouseKeyStates();
+        previousTime = currentTime;
+        if (mainLevel) mainLevel->ProcessAddedAndDestroyedActor();
+    }
+}</code></pre>
+                </div>
+                <p style="margin-top: 8px; color: var(--text-secondary); font-size: 0.8rem;">프레임 끝에서만 Actor 정리를 수행하는 안전 지점을 엔진 루프에 고정했습니다.</p>
+            </div>
+            
+            <div class="project-card">
+                <h3>기술적으로 배운 것</h3>
+                <ul class="contribution-list">
+                    <li><strong>Unreal Engine의 Gameplay Framework 이해:</strong> 직접 구현하면서 왜 Actor 기반 구조가 효율적인지, Tick 시스템이 왜 중요한지 체감했습니다.</li>
+                    <li><strong>엔진 내부 동작 원리 추론 능력:</strong> Unreal Engine을 사용할 때 내부적으로 어떤 일이 일어나는지 추론할 수 있게 되어, 디버깅과 최적화에 도움이 됩니다.</li>
+                    <li><strong>변경 영역 추적의 중요성:</strong> 화면 갱신은 전체를 반복 출력하기보다 변경된 영역만 다시 그리는 방식이 확장에 유리하다는 것을 확인했습니다.</li>
+                </ul>
+            </div>
+            
+            <div class="project-card">
+                <h3>개선할 수 있는 부분</h3>
+                <ul class="contribution-list">
+                    <li><strong>렌더 레이어 분리:</strong> 보드, UI, 오버레이를 분리하면 각 영역에 다른 갱신 규칙을 적용하기 쉽습니다.</li>
+                    <li><strong>Unreal의 Subsystem 패턴 적용:</strong> InputManager, RenderManager를 별도 시스템으로 분리하면 Unreal의 GameInstance Subsystem과 유사한 구조를 익힐 수 있습니다.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE 17: PROJECT 5 - Cub3D Overview -->
+    <div class="a4-page" id="project-5">
+        <div class="container">
+            <h2>Cub3D</h2>
+            
+            <div class="project-card">
+                <h3>프로젝트 개요</h3>
+                <img src="./images/cub3d-main.png" alt="Cub3D 게임 스크린샷" style="width: 90%; margin: 10px 0;">
+                <p>42Seoul 과제로 진행한 레이캐스팅 기반 3D 렌더링 프로젝트입니다. 2D 격자 맵을 DDA 알고리즘으로 탐색해 1인칭 시점 화면을 구현하며, 저수준 그래픽 프로그래밍과 수학적 렌더링 원리를 학습했습니다.</p>
+                <div class="project-meta">
+                    <span class="meta-tag">장르: 1인칭 탐색, 던전 뷰어</span>
+                    <span class="meta-tag">역할: 렌더링 시스템 구현</span>
+                    <span class="meta-tag">기간: 2023.05.01 - 2023.05.29</span>
+                    <span class="meta-tag">기술: C, MiniLibX, DDA, Raycasting</span>
+                </div>
+                <p><strong>팀 구성:</strong> 2명</p>
+                
+                <div style="margin-top: 12px;">
+                    <h4>프로젝트 링크</h4>
+                    <div class="project-links">
+                        <a href="https://github.com/Alice-inNovember/42_Cub3D" class="btn" target="_blank">GitHub Repository</a>
+                        <a href="https://youtu.be/NSG-jEjes0E" class="btn btn-secondary" target="_blank">Demo Video</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="project-card">
+                <h3>본인 기여 내용</h3>
+                <ul class="contribution-list">
+                    <li><strong>레이캐스팅 기반 화면 출력:</strong> 화면 세로 줄마다 광선을 쏘고, 벽까지 거리로 높이를 계산해 한 프레임 구성</li>
+                    <li><strong>DDA 알고리즘으로 벽 충돌 탐색:</strong> 격자 맵에서 광선이 지나는 칸을 순차 추적해 첫 충돌 지점 탐색</li>
+                    <li><strong>벽 텍스처 매핑:</strong> 충돌 면 방향과 위치로 텍스처 좌표를 계산하고 화면에 맞게 샘플링</li>
+                    <li><strong>미니맵 최적화:</strong> 배경은 미리 이미지로 생성하고 플레이어 위치만 갱신하도록 구성</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE 18: PROJECT 5 - Technical Challenges -->
+    <div class="a4-page">
+        <div class="container">
+            <h2>Cub3D - 기술적 도전과 해결</h2>
+            
+            <div class="project-card compact">
+                <h3>특정 각도에서 벽 탐색이 멈추는 문제</h3>
+                
+                <h4 style="color: var(--primary-color); font-size: 0.9rem; margin-bottom: 4px;">Problem</h4>
+                <p style="margin-bottom: 6px;">시야각에 따라 DDA가 같은 칸을 반복하며 무한 루프에 빠짐</p>
+                
+                <h4 style="color: var(--primary-color); font-size: 0.9rem; margin-bottom: 4px;">Solution</h4>
+                <p style="margin-bottom: 6px;">광선 방향으로 step을 먼저 확정하고, first_dist를 정확히 초기화. 더 가까운 축부터 한 칸씩 이동하도록 루프 고정</p>
+                
+                <h4 style="color: var(--primary-color); font-size: 0.9rem; margin-bottom: 4px;">Result</h4>
+                <p>모든 각도에서 첫 충돌 지점을 안정적으로 탐색</p>
+            </div>
+            
+            <div class="project-card compact">
+                <h3>회전 시 벽이 휘어 보이는 왜곡</h3>
+                
+                <h4 style="color: var(--primary-color); font-size: 0.9rem; margin-bottom: 4px;">Problem</h4>
+                <p style="margin-bottom: 6px;">광선 길이로 벽 높이를 계산하면 화면 가장자리에서 거리가 과장됨</p>
+                
+                <h4 style="color: var(--primary-color); font-size: 0.9rem; margin-bottom: 4px;">Solution</h4>
+                <p style="margin-bottom: 6px;">카메라 화면 평면에 수직인 거리 값으로 벽 높이를 계산하도록 변경</p>
+                
+                <h4 style="color: var(--primary-color); font-size: 0.9rem; margin-bottom: 4px;">Result</h4>
+                <p>회전 중에도 벽 높이가 일정하게 유지되어 왜곡 제거</p>
+            </div>
+            
+            <div class="project-card compact">
+                <h3>미니맵이 프레임에 부담을 주는 문제</h3>
+                
+                <h4 style="color: var(--primary-color); font-size: 0.9rem; margin-bottom: 4px;">Problem</h4>
+                <p style="margin-bottom: 6px;">타일 단위로 매 프레임 다시 그리면 불필요한 픽셀 연산 누적</p>
+                
+                <h4 style="color: var(--primary-color); font-size: 0.9rem; margin-bottom: 4px;">Solution</h4>
+                <p style="margin-bottom: 6px;">배경은 구역별 이미지로 미리 생성, 플레이어 위치만 갱신</p>
+                
+                <h4 style="color: var(--primary-color); font-size: 0.9rem; margin-bottom: 4px;">Result</h4>
+                <p>미니맵을 켠 상태에서도 프레임 안정성 유지</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE 19: PROJECT 5 - Code Samples & Learnings -->
+    <div class="a4-page">
+        <div class="container">
+            <h2>Cub3D - 코드 샘플 및 배운 점</h2>
+            
+            <div class="project-card">
+                <h4>DDA 핵심 루프</h4>
+                <div class="code-container">
+                    <pre><code class="language-c">void ray_casting(t_map *map, t_detail_info *info)
+{
+    while (info->hit == 0)
+    {
+        if (info->first_dist_x < info->first_dist_y)
+        {
+            info->first_dist_x += info->squ_per_dist_x;
+            info->map_x += info->step_x;
+            info->side = 0;
+        }
+        else
+        {
+            info->first_dist_y += info->squ_per_dist_y;
+            info->map_y += info->step_y;
+            info->side = 1;
+        }
+        if (map->map[info->map_x][info->map_y] == '1')
+            info->hit = 1;
+    }
+}</code></pre>
+                </div>
+                <p style="margin-top: 8px; color: var(--text-secondary); font-size: 0.8rem;">first_dist_x, first_dist_y를 비교해 더 가까운 축부터 한 칸 이동하며 벽 탐색</p>
+            </div>
+            
+            <div class="project-card">
+                <h3>기술적으로 배운 것</h3>
+                <ul class="contribution-list">
+                    <li><strong>DDA 알고리즘 이해:</strong> 직선은 결국 격자 칸을 어떤 순서로 지나가는지의 문제. 더 가까운 칸을 고르는 선택이 반복되면서 직선이 만들어짐을 이해</li>
+                    <li><strong>수학적 렌더링 원리:</strong> 카메라처럼 화면 평면을 가정하면 1인칭 화면이 수학적으로 정리됨</li>
+                    <li><strong>렌더링 최적화 경험:</strong> 고정되는 요소는 미리 생성하고, 움직이는 요소만 갱신하면 프레임이 안정</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE 20: Education & Activities -->
+    <div class="a4-page" id="education">
+        <div class="container">
+            <h2>Education & Activities</h2>
+            
+            <div class="project-card" style="margin-bottom: 10px;">
+                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 8px;">
+                    <div>
+                        <h3 style="margin-bottom: 4px; font-size: 1.1rem;">42Seoul 6기</h3>
+                        <p style="color: var(--text-muted); margin-bottom: 0; font-size: 0.85rem;">2022.03 - 2024.02</p>
+                    </div>
+                    <a href="https://42seoul.kr" class="btn btn-secondary" target="_blank" style="padding: 6px 14px; font-size: 0.78rem;">공식 사이트</a>
+                </div>
+                <p style="margin-bottom: 8px; font-size: 0.85rem;">동료 학습 기반 소프트웨어 교육. C/C++ 시스템 프로그래밍과 협업 능력 향상</p>
+                <ul class="contribution-list" style="margin: 6px 0;">
+                    <li style="padding: 5px 20px; font-size: 0.83rem;">C 표준 라이브러리 직접 구현 및 메모리 조작 학습</li>
+                    <li style="padding: 5px 20px; font-size: 0.83rem;">멀티 스레드 동기화 (식사하는 철학자 문제, 뮤텍스/세마포어)</li>
+                    <li style="padding: 5px 20px; font-size: 0.83rem;">C++ IRC 채팅 서버 (poll() 멀티플렉싱)</li>
+                </ul>
+            </div>
+            
+            <div class="project-card" style="margin-bottom: 10px;">
+                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 8px;">
+                    <div>
+                        <h3 style="margin-bottom: 4px; font-size: 1.1rem;">메타버스 아카데미 3기 (Unreal)</h3>
+                        <p style="color: var(--text-muted); margin-bottom: 0; font-size: 0.85rem;">2024.06 - 2024.11</p>
+                    </div>
+                    <a href="https://mtvs.kr" class="btn btn-secondary" target="_blank" style="padding: 6px 14px; font-size: 0.78rem;">공식 사이트</a>
+                </div>
+                <p style="margin-bottom: 8px; font-size: 0.85rem;">Unreal Engine 게임 개발 과정. Blueprint/C++ 실전 프로젝트</p>
+                <ul class="contribution-list" style="margin: 6px 0;">
+                    <li style="padding: 5px 20px; font-size: 0.83rem;">Blueprint/C++ 게임플레이 시스템 및 애니메이션 구축</li>
+                    <li style="padding: 5px 20px; font-size: 0.83rem;">RPC/Replication 기반 멀티플레이 개발</li>
+                    <li style="padding: 5px 20px; font-size: 0.83rem;">게임 모작 프로젝트로 타 직군 협업 경험</li>
+                </ul>
+            </div>
+            
+            <div class="project-card" style="margin-bottom: 10px;">
+                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 8px;">
+                    <div>
+                        <h3 style="margin-bottom: 4px; font-size: 1.1rem;">원티드 - 포텐업 1기 (Unreal)</h3>
+                        <p style="color: var(--text-muted); margin-bottom: 0; font-size: 0.85rem;">2024.12 - 2025.06</p>
+                    </div>
+                    <a href="https://www.wanted.co.kr/events/preopen_potenup" class="btn btn-secondary" target="_blank" style="padding: 6px 14px; font-size: 0.78rem;">공식 사이트</a>
+                </div>
+                <p style="margin-bottom: 8px; font-size: 0.85rem;">Unreal Engine 심화 학습 과정</p>
+                <ul class="contribution-list" style="margin: 6px 0;">
+                    <li style="padding: 5px 20px; font-size: 0.83rem;">Windows API 콘솔 게임 엔진 구현</li>
+                    <li style="padding: 5px 20px; font-size: 0.83rem;">C++ 미니 STL 및 알고리즘 직접 구현</li>
+                    <li style="padding: 5px 20px; font-size: 0.83rem;">Unreal Engine 내부 코드 분석</li>
+                </ul>
+            </div>
+            
+            <div class="project-card" style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(236, 72, 153, 0.05)); margin-bottom: 0;">
+                <h3 style="margin-bottom: 12px; font-size: 1.1rem;">📚 Study & Continuous Learning</h3>
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;">
+                    <div>
+                        <h4 style="font-size: 0.88rem; margin-bottom: 5px;">코테 알고리즘 스터디</h4>
+                        <p style="color: var(--text-muted); font-size: 0.78rem; margin-bottom: 6px;">2025.09 - 2026.04</p>
+                        <p style="font-size: 0.83rem;">매일 백준 1문제 이상 풀이 및 토론</p>
+                    </div>
+                    <div>
+                        <h4 style="font-size: 0.88rem; margin-bottom: 5px;">C++ 스터디</h4>
+                        <p style="color: var(--text-muted); font-size: 0.78rem; margin-bottom: 6px;">2024.12 - 2025.08</p>
+                        <p style="font-size: 0.83rem;">C++ 기초 플러스 독서 및 토론</p>
+                    </div>
+                    <div>
+                        <h4 style="font-size: 0.88rem; margin-bottom: 5px;">컴퓨터 구조 스터디</h4>
+                        <p style="color: var(--text-muted); font-size: 0.78rem; margin-bottom: 6px;">2023.10 - 2023.11</p>
+                        <p style="font-size: 0.83rem;">한 권으로 읽는 컴퓨터 구조와 프로그래밍</p>
+                    </div>
+                    <div>
+                        <h4 style="font-size: 0.88rem; margin-bottom: 5px;">운영체제 스터디</h4>
+                        <p style="color: var(--text-muted); font-size: 0.78rem; margin-bottom: 6px;">2023.06 - 2023.09</p>
+                        <p style="font-size: 0.83rem;">운영체제(공룡책) 독서 및 토론</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE 21: Blog & Footer -->
+    <div class="a4-page">
+        <div class="container">
+            <h2>Blog & Continuous Learning</h2>
+            
+            <p style="margin-bottom: 14px; color: var(--text-secondary);">프로젝트를 진행하며 학습한 내용을 기록하고 공유합니다.</p>
+            
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px;">
+                <div class="project-card" style="display: flex; flex-direction: column; padding: 10px;">
+                    <div style="width: 100%; height: 85px; background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); border-radius: 7px; margin-bottom: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem;">
+                        🌐
+                    </div>
+                    <h4 style="margin-bottom: 5px; font-size: 0.85rem; line-height: 1.3;">왜 Web Socket이 TCP Socket보다 무거울까</h4>
+                    <p style="color: var(--text-secondary); margin-bottom: 8px; flex-grow: 1; font-size: 0.75rem; line-height: 1.3;">WebSocket과 TCP Socket의 차이점과 오버헤드 발생 원인을 분석</p>
+                    <a href="https://velog.io/@flatroad/%EC%99%9C-Web-Socket%EC%9D%B4-TCP-Socket%EB%B3%B4%EB%8B%A4-%EB%AC%B4%EA%B1%B0%EC%9A%B8%EA%B9%8C" class="btn" target="_blank" style="width: 100%; padding: 5px; font-size: 0.72rem;">
+                        블로그 포스트 읽기 →
+                    </a>
+                </div>
+                
+                <div class="project-card" style="display: flex; flex-direction: column; padding: 10px;">
+                    <div style="width: 100%; height: 85px; background: linear-gradient(135deg, var(--secondary-color), var(--accent-color)); border-radius: 7px; margin-bottom: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem;">
+                        🔌
+                    </div>
+                    <h4 style="margin-bottom: 5px; font-size: 0.85rem; line-height: 1.3;">Windows winsock2.h 학습</h4>
+                    <p style="color: var(--text-secondary); margin-bottom: 8px; flex-grow: 1; font-size: 0.75rem; line-height: 1.3;">Windows 소켓 프로그래밍의 핵심인 Winsock2 API를 학습</p>
+                    <a href="https://velog.io/@flatroad/Windows-winsock2.h" class="btn" target="_blank" style="width: 100%; padding: 5px; font-size: 0.72rem;">
+                        블로그 포스트 읽기 →
+                    </a>
+                </div>
+                
+                <div class="project-card" style="display: flex; flex-direction: column; padding: 10px;">
+                    <div style="width: 100%; height: 85px; background: linear-gradient(135deg, #ec4899, #f59e0b); border-radius: 7px; margin-bottom: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem;">
+                        🎮
+                    </div>
+                    <h4 style="margin-bottom: 5px; font-size: 0.85rem; line-height: 1.3;">젤다의 전설 - CubeRotate</h4>
+                    <p style="color: var(--text-secondary); margin-bottom: 8px; flex-grow: 1; font-size: 0.75rem; line-height: 1.3;">Tears Of The Kingdom의 큐브 회전 메커니즘 구현</p>
+                    <a href="https://velog.io/@flatroad/%EC%A0%A4%EB%8B%A4%EC%9D%98-%EC%A0%84%EC%84%A4Tears-Of-The-KingDom-CubeRotate" class="btn" target="_blank" style="width: 100%; padding: 5px; font-size: 0.72rem;">
+                        블로그 포스트 읽기 →
+                    </a>
+                </div>
+                
+                <div class="project-card" style="display: flex; flex-direction: column; padding: 10px;">
+                    <div style="width: 100%; height: 85px; background: linear-gradient(135deg, #10b981, #3b82f6); border-radius: 7px; margin-bottom: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem;">
+                        🎯
+                    </div>
+                    <h4 style="margin-bottom: 5px; font-size: 0.85rem; line-height: 1.3;">젤다의 전설 - ModeSelect</h4>
+                    <p style="color: var(--text-secondary); margin-bottom: 8px; flex-grow: 1; font-size: 0.75rem; line-height: 1.3;">Tears Of The Kingdom의 모드 선택 시스템 구현</p>
+                    <a href="https://velog.io/@flatroad/%EC%A0%A4%EB%8B%A4%EC%9D%98-%EC%A0%84%EC%84%A4Tears-Of-The-KingDom-ModeSelect" class="btn" target="_blank" style="width: 100%; padding: 5px; font-size: 0.72rem;">
+                        블로그 포스트 읽기 →
+                    </a>
+                </div>
+                
+                <div class="project-card" style="display: flex; flex-direction: column; grid-column: span 2; padding: 10px;">
+                    <div style="width: 100%; height: 85px; background: linear-gradient(135deg, #6366f1, #8b5cf6); border-radius: 7px; margin-bottom: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem;">
+                        📚
+                    </div>
+                    <h4 style="margin-bottom: 5px; font-size: 0.85rem; line-height: 1.3;">콘솔 로케일</h4>
+                    <p style="color: var(--text-secondary); margin-bottom: 8px; flex-grow: 1; font-size: 0.75rem; line-height: 1.3;">Windows 콘솔에서 한글이 깨지는 원인이 되는 로케일과 코드 페이지 정리<br>printf와 wprintf의 차이 분석</p>
+                    <a href="https://velog.io/@flatroad/%EC%BD%98%EC%86%94%EB%A1%9C%EC%BC%80%EC%9D%BC" class="btn" target="_blank" style="width: 100%; padding: 5px; font-size: 0.72rem;">
+                        블로그 포스트 읽기 →
+                    </a>
+                </div>
+            </div>
+            
+            <div style="margin-top: 25px; text-align: center; padding-top: 20px; border-top: 1px solid var(--border-color);">
+                <p style="color: var(--text-muted); margin-bottom: 10px; font-size: 0.82rem;">© 2026 최성락. All Rights Reserved.</p>
+                <div>
+<a href="https://github.com/flatroad" target="_blank" style="color: var(--text-muted); text-decoration: none; margin: 0 10px; font-size: 0.8rem;">GitHub</a>
+                    <a href="https://velog.io/@flatroad" target="_blank" style="color: var(--text-muted); text-decoration: none; margin: 0 10px; font-size: 0.8rem;">Velog</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Initialize Highlight.js -->
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelectorAll('pre code').forEach((block) => {
+                hljs.highlightElement(block);
+            });
+        });
+    </script>
+
+</body>
+</html>
